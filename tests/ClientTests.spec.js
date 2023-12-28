@@ -7,10 +7,6 @@ require('dotenv').config()
 
 test('Create new user', async ({ page }) => {
 
-    console.log('variable' + process.env.email);
-    //console.log('variable 1: ' + EMAIL_ADDRESS);
-    console.log('variable 2: ' + process.env.EMAIL_ADDRESS);
-
     const firstName = 'Wojciech';
     const lastName = 'Krzysiek';
     const password = '12345';
@@ -23,11 +19,11 @@ test('Create new user', async ({ page }) => {
     await homePage.openSignInPage();
 
     const signInPage = new SignInPage(page);
-    await signInPage.registerNewUser(process.env.email);
+    await signInPage.registerNewUser(process.env.EMAIL_ADDRESS);
     
     const registerUserPage = new RegisterUserPage(page);
     await registerUserPage.setMrTitle();
-    await registerUserPage.fillNewUserDetails(firstName, lastName, process.env.email, password, dayOfBirth, monthOfBirth, yearOfBirth);
+    await registerUserPage.fillNewUserDetails(firstName, lastName, process.env.EMAIL_ADDRESS, password, dayOfBirth, monthOfBirth, yearOfBirth);
     await registerUserPage.registerUser();
 
     const myAccountPage = new MyAccountPage(page);
