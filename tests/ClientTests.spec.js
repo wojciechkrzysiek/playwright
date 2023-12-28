@@ -8,7 +8,8 @@ require('dotenv').config()
 test('Create new user', async ({ page }) => {
 
     console.log('variable' + process.env.email);
-    console.log('variable' + EMAIL_ADDRESS);
+    console.log('variable 1: ' + EMAIL_ADDRESS);
+    console.log('variable 2: ' + process.env.EMAIL_ADDRESS);
 
     const firstName = 'Wojciech';
     const lastName = 'Krzysiek';
