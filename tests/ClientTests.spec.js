@@ -3,10 +3,11 @@ const { HomePage } = require('../page-objects/HomePage');
 const { SignInPage } = require('../page-objects/SignInPage');
 const { RegisterUserPage } = require('../page-objects/RegisterUserPage');
 const { MyAccountPage } = require('../page-objects/MyAccountPage');
+require('dotenv').config()
 
 test('Create new user', async ({ page }) => {
 
-    const email = 'email1afrw2312121111211@wp.pl'
+    console.log('variable' + process.env.email);
     const firstName = 'Wojciech';
     const lastName = 'Krzysiek';
     const password = '12345';
@@ -19,11 +20,11 @@ test('Create new user', async ({ page }) => {
     await homePage.openSignInPage();
 
     const signInPage = new SignInPage(page);
-    await signInPage.registerNewUser(email);
+    await signInPage.registerNewUser(process.env.email);
     
     const registerUserPage = new RegisterUserPage(page);
     await registerUserPage.setMrTitle();
-    await registerUserPage.fillNewUserDetails(firstName, lastName, email, password, dayOfBirth, monthOfBirth, yearOfBirth);
+    await registerUserPage.fillNewUserDetails(firstName, lastName, process.env.email, password, dayOfBirth, monthOfBirth, yearOfBirth);
     await registerUserPage.registerUser();
 
     const myAccountPage = new MyAccountPage(page);
