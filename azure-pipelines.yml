@@ -17,8 +17,8 @@ steps:
 - script: npx playwright test
   displayName: 'Run Playwright tests'
   env:
-    email : '$(email)'
     CI: 'true'
+    EMAIL_ADDRESS : '$(email)'
 - task: PublishTestResults@2
   displayName: 'Publish test results'
   inputs:
