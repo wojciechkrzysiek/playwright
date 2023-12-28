@@ -2,6 +2,8 @@ class SignInPage {
 
     constructor(page) {
 
+        this.header = page.locator('.page-heading');
+        
         this.emailAddressToRegister = page.locator('#email_create');
         this.createAccountButton = page.locator('#SubmitCreate');
 

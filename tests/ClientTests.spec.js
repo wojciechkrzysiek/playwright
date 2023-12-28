@@ -1,18 +1,11 @@
 import { test, expect } from '@playwright/test';
 const { HomePage } = require('../page-objects/HomePage');
-const { SignInPage } = require('../page-objects/SignInPage');
-const { RegisterUserPage } = require('../page-objects/RegisterUserPage');
-const { MyAccountPage } = require('../page-objects/MyAccountPage');
+const { SignInPage } = require('../page-objects/userPages/SignInPage');
+const { RegisterUserPage } = require('../page-objects/userPages/RegisterUserPage');
+const { MyAccountPage } = require('../page-objects/userPages/MyAccountPage');
 require('dotenv').config()
 
 test('Create new user', async ({ page }) => {
-
-    const firstName = 'Wojciech';
-    const lastName = 'Krzysiek';
-    const password = '12345';
-    const dayOfBirth = '1';
-    const monthOfBirth = '1';
-    const yearOfBirth = '1990';
 
     const homePage = new HomePage(page);
     await homePage.openHomePage();
@@ -23,7 +16,7 @@ test('Create new user', async ({ page }) => {
     
     const registerUserPage = new RegisterUserPage(page);
     await registerUserPage.setMrTitle();
-    await registerUserPage.fillNewUserDetails(firstName, lastName, process.env.EMAIL_ADDRESS, password, dayOfBirth, monthOfBirth, yearOfBirth);
+    await registerUserPage.fillNewUserDetails(process.env.FIRST_NAME, process.env.LAST_NAME, process.env.EMAIL_ADDRESS, process.env.PASSWORD, process.env.DAY_OF_BIRTH, process.env.MONTH_OF_BIRTH, process.env.YEAR_OF_BIRTH);
     await registerUserPage.registerUser();
 
     const myAccountPage = new MyAccountPage(page);

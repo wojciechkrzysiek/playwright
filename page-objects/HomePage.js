@@ -32,7 +32,7 @@ class HomePage {
 
     async openHomePage() {
 
-        await this.page.goto("https://www.automationpractice.pl/index.php");
+        await this.page.goto(process.env.HOME_PAGE);
 
     }
 

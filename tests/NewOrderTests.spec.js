@@ -1,7 +1,15 @@
 import { test, expect } from '@playwright/test';
 const { HomePage } = require('../page-objects/HomePage');
-const { WomenCategoryPage } = require('../page-objects/categories/WomenCategoryPage');
-const { AddToCartPopupPage } = require('../page-objects/AddToCartPopupPage');
+const { WomenCategoryPage } = require('../page-objects/categoriesPages/WomenCategoryPage');
+const { AddToCartPopupPage } = require('../page-objects/productPages/AddToCartPopupPage');
+const { ShoppingCartSummaryPage } = require('../page-objects/orderPages/ShoppingCartSummaryPage');
+const { SignInPage } = require('../page-objects/userPages/SignInPage');
+const { AddressCartPage } = require('../page-objects/orderPages/AddressCartPage');
+const { ShippingPage } = require('../page-objects/orderPages/ShippingPage');
+const { PaymentPage } = require('../page-objects/orderPages/PaymentPage');
+const { OrderSummaryPage } = require('../page-objects/orderPages/OrderSummaryPage');
+const { OrderConfirmationPage } = require('../page-objects/orderPages/OrderConfirmationPage');
+
 
 test('New order', async ({ page }) => {
 
@@ -20,5 +28,35 @@ test('New order', async ({ page }) => {
 
     const addToCartPopupPage = new AddToCartPopupPage(page);
     await expect(await addToCartPopupPage.header).toBeVisible();
+    await addToCartPopupPage.proceedToCheckoutButton.click();
+
+    const shoppingCartSummaryPage = new ShoppingCartSummaryPage(page);
+    await expect(await shoppingCartSummaryPage.header).toBeVisible();
+    await shoppingCartSummaryPage.proceedToCheckout.click();
+    
+    const signInPage = new SignInPage(page);
+    await expect(await signInPage.header).toBeVisible();
+    await signInPage.signInUser('wojciech.krzysiek.1@gmail.com', '12345');
+
+    const addressCartPage = new AddressCartPage(page);
+    await expect(await addressCartPage.header).toBeVisible();
+    await addressCartPage.proceedToCheckout.click();
+
+    const shippingPage = new ShippingPage(page);
+    await expect(await shippingPage.header).toBeVisible();
+    await shippingPage.agreementCheckbox.click();
+    await shippingPage.proceedToCheckout.click();
+
+    const paymentPage = new PaymentPage(page);
+    await expect(await paymentPage.header).toBeVisible();
+    await paymentPage.byCheckPayment.click();
+
+    const orderSummaryPage = new OrderSummaryPage(page);
+    await expect(await orderSummaryPage.header).toBeVisible();
+    await orderSummaryPage.confirmOrder.click();
+    
+    const orderConfirmationPage = new OrderConfirmationPage(page);
+    await expect(await orderConfirmationPage.header).toBeVisible();
+    await expect(await orderConfirmationPage.alertSuccess).toBeVisible();
 
 });
