@@ -14,13 +14,11 @@ steps:
   displayName: 'npm ci'
 - script: npx playwright install --with-deps
   displayName: 'Install Playwright browsers'
-- script: $env:email=$(email)
-  env:
-    email : '$(email)'
 - script: npx playwright test
   displayName: 'Run Playwright tests'
   env:
     CI: 'true'
+    EMAIL_ADDRESS : '$(email)'
 - task: PublishTestResults@2
   displayName: 'Publish test results'
   inputs:
