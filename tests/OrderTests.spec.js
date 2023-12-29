@@ -11,7 +11,7 @@ const { OrderSummaryPage } = require('../page-objects/orderPages/OrderSummaryPag
 const { OrderConfirmationPage } = require('../page-objects/orderPages/OrderConfirmationPage');
 
 
-test('New order', async ({ page }) => {
+test('New order with log in', async ({ page }) => {
 
     const homePage = new HomePage(page);
     await homePage.openHomePage();
@@ -59,4 +59,7 @@ test('New order', async ({ page }) => {
     await expect(await orderConfirmationPage.header).toBeVisible();
     await expect(await orderConfirmationPage.alertSuccess).toBeVisible();
 
+});
+
+test('Check order quantity and prices', async ({ page }) => {
 });

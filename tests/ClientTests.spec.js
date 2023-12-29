@@ -12,11 +12,14 @@ test('Create new user', async ({ page }) => {
     await homePage.openSignInPage();
 
     const signInPage = new SignInPage(page);
-    await signInPage.registerNewUser(process.env.EMAIL_ADDRESS);
+    const currentDate = new Date().toLocaleString()
+    const email = process.env.EMAIL_ADDRESS + currentDate.replaceAll(/[/,: ]/g, '') + '@wp.pl';
+    console.log('email: ' + email);
+    await signInPage.registerNewUser(email);
     
     const registerUserPage = new RegisterUserPage(page);
     await registerUserPage.setMrTitle();
-    await registerUserPage.fillNewUserDetails(process.env.FIRST_NAME, process.env.LAST_NAME, process.env.EMAIL_ADDRESS, process.env.PASSWORD, process.env.DAY_OF_BIRTH, process.env.MONTH_OF_BIRTH, process.env.YEAR_OF_BIRTH);
+    await registerUserPage.fillNewUserDetails(process.env.FIRST_NAME, process.env.LAST_NAME, email, process.env.PASSWORD, process.env.DAY_OF_BIRTH, process.env.MONTH_OF_BIRTH, process.env.YEAR_OF_BIRTH);
     await registerUserPage.registerUser();
 
     const myAccountPage = new MyAccountPage(page);
