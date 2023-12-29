@@ -9,6 +9,7 @@ const { ShippingPage } = require('../page-objects/orderPages/ShippingPage');
 const { PaymentPage } = require('../page-objects/orderPages/PaymentPage');
 const { OrderSummaryPage } = require('../page-objects/orderPages/OrderSummaryPage');
 const { OrderConfirmationPage } = require('../page-objects/orderPages/OrderConfirmationPage');
+const { DressesCategoryPage } = require('../page-objects/categoriesPages/DressesCategoryPage');
 
 
 test('New order with log in', async ({ page }) => {
@@ -62,4 +63,35 @@ test('New order with log in', async ({ page }) => {
 });
 
 test('Check order quantity and prices', async ({ page }) => {
+
+    const homePage = new HomePage(page);
+    await homePage.openHomePage();
+    expect(await homePage.dressesCategory).toBeVisible();
+    await homePage.dressesCategory.click();
+
+    const dressesCategory = new DressesCategoryPage(page);
+    expect(await dressesCategory.categoryName.innerText()).toContain('Dresses');
+    await dressesCategory.addProductByProductNumber(1);
+    const addToCartPopupPage = new AddToCartPopupPage(page);
+    await expect(await addToCartPopupPage.header).toBeVisible();
+    await addToCartPopupPage.continueShoppingButton.click();
+    const firstProductPrice = parseInt(await dressesCategory.getProductPriceByProductNumber(1));
+    await dressesCategory.addProductByProductNumber(2);
+    await expect(await addToCartPopupPage.header).toBeVisible();
+    await addToCartPopupPage.continueShoppingButton.click();
+    const secondProductPrice = parseInt(await dressesCategory.getProductPriceByProductNumber(2));
+    await dressesCategory.addProductByProductNumber(3);
+    await expect(await addToCartPopupPage.header).toBeVisible();
+    await addToCartPopupPage.continueShoppingButton.click();
+    const thirdProductPrice = parseInt(await dressesCategory.getProductPriceByProductNumber(3));
+
+    homePage.cart.click();
+
+    const shoppingCartSummaryPage = new ShoppingCartSummaryPage(page);
+    await expect(await shoppingCartSummaryPage.header).toBeVisible();
+
+    const totalPrice = firstProductPrice + secondProductPrice + thirdProductPrice;
+    expect(await shoppingCartSummaryPage.summaryProductsQuantity.textContent()).toContain('3 products');
+    expect(await shoppingCartSummaryPage.totalPrice.textContent()).toContain('$' + totalPrice.toString());
+
 });

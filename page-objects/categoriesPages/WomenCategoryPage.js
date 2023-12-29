@@ -32,7 +32,6 @@ class WomenCategoryPage {
 
     async openProductPageByProductNumber(number) {
 
-        //await this.product.nth(number).click();
         await this.product.click();
 
     }

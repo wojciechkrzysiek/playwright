@@ -11,9 +11,9 @@ class HomePage {
         this.cart = page.getByTitle('View my shopping cart');
 
         this.womenCategory = page.getByTitle('Women').and(page.locator('.sf-with-ul'));
+        this.dressesCategory = page.locator('#block_top_menu > ul > li:nth-child(2) > a');
+        this.tshirtsCategory = page.getByTitle('T-shirts').and(page.locator('.sf-with-ul'));
 
-        this.dressesCategory = page.getByTitle('Dresses');
-        this.tshirtsCategory = page.getByTitle('T-shirts');
         this.blog = page.getByTitle('Blog');
 
     }
